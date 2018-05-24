@@ -18,12 +18,23 @@ class App extends Component {
 
     this.id = 4
     this.editEvent = this.editEvent.bind(this)
+    this.deleteEvent = this.deleteEvent.bind(this)
   }
 
   createEvent() {
     let post = { id: this.id, name: this.state.nameInput, title: this.state.titleInput, desc: this.state.descInput }
     this.setState({ events: [...this.state.events, post] })
     this.id++
+  }
+
+  deleteEvent(id) {
+    let eventsCopy = this.state.events.slice()
+    for (let i = 0; i < eventsCopy.length; i++) {
+      if (eventsCopy[i].id === id) {
+        eventsCopy.splice(i, 1)
+      }
+    }
+    this.setState({ events: eventsCopy })
   }
 
   editEvent(id, name, title, description) {
@@ -38,12 +49,23 @@ class App extends Component {
     this.setState({ events: eventsCopy })
   }
 
+  // editEvent(event) {
+  //   let eventsCopy = this.state.events.slice()
+  //   for (let i = 0; i < eventsCopy.length; i++) {
+  //     if(eventsCopy[i].id === event.id) {
+  //       eventsCopy[i] = event
+  //     }
+  //   }
+  //   this.setState({events: eventsCopy})
+  // }
+
   render() {
     let mapped = this.state.events.map((event, i) => {
       return <EventCard
         key={i + event.name}
         event={event}
         editEvent={this.editEvent}
+        deleteEvent={this.deleteEvent}
       />
     })
     return (

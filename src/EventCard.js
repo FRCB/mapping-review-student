@@ -21,7 +21,7 @@ export default class eventCard extends Component {
         })
     }
 
-    saveClick() {
+    editClick() {
         if (this.state.editToggle) {
             this.props.editEvent(this.props.event.id, this.state.editName, this.state.editTitle, this.state.editDesc)
         }
@@ -56,10 +56,12 @@ export default class eventCard extends Component {
                 }
 
                 <button
-                    onClick={() => this.saveClick()}>
+                    onClick={() => this.editClick()}>
                     {this.state.editToggle ? 'Save' : 'Edit'}
                 </button>
-                <button>Delete</button>
+                <button
+                    onClick={()=> this.props.deleteEvent(this.props.event.id)}>
+                    Delete</button>
             </div >
         )
     }
